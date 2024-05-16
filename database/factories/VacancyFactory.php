@@ -17,7 +17,7 @@ class VacancyFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => $this->faker->dateTimeBetween('+0 days', '+2 years'),
+            'date' => $this->faker->unique()->dateTimeBetween('+0 days', '+2 years'),
             'count' => $this->faker->numberBetween(0, 100),
         ];
     }
