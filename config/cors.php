@@ -19,7 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000')],
+    // Allowed all origins for ease of testing. Whether it should have the same configuration in production depends on the use case.
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
