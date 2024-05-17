@@ -19,6 +19,8 @@ class ReservationController extends Controller
         // Normally I would consider adding here and additional layer for transforming the data, probably using API Resources - https://laravel.com/docs/11.x/eloquent-resources.
         // However here the data returned is very simple and it can be argued that none of the fields need transforming, so I omitted it.
 
+        // The `start_date` and `end_date` fields have time in the value, even though we treat them as dates, because in a production-app there would also be a need of handling check-in and check-out dates.
+        // This way it can be added without introducing breaking changes to the API
         return Reservation::latest()->paginate();
     }
 
@@ -43,6 +45,7 @@ class ReservationController extends Controller
             Vacancy::decreaseAvailability($dateRange, $count);
         });
 
-        return response()->json([], 201);
+        // I chose here not to include the created resource in the response because for this app it wasn't needed. In a real API this would need to be considered.
+        return response()->json(['success' => true], 201);
     }
 }
