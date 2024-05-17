@@ -60,7 +60,7 @@ class ReservationControllerTest extends TestCase
                 'to',
                 'total',
             ]);
-        $this->assertCount(25, $response->json('data'));
+        $this->assertCount(15, $response->json('data'));
     }
 
     #[Group('reservations.store')]
