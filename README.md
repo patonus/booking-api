@@ -1,3 +1,5 @@
+# Booking API
+
 ## Testing
 
 This application has seeding implemented for easier testing. The `Vacancy` seed generates 10 random vacancies + 3 for first available days.
