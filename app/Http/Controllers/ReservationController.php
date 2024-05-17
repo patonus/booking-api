@@ -6,9 +6,9 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Models\Reservation;
 use App\Models\Vacancy;
 use Carbon\CarbonPeriod;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use InvalidArgumentException;
 
 class ReservationController extends Controller
 {
@@ -16,7 +16,10 @@ class ReservationController extends Controller
     {
         Gate::authorize('viewAny', Reservation::class);
 
-        return Reservation::latest()->paginate(25); //TODO: Add resource
+        // Normally I would consider adding here and additional layer for transforming the data, probably using API Resources - https://laravel.com/docs/11.x/eloquent-resources.
+        // However here the data returned is very simple and it can be argued that none of the fields need transforming, so I omitted it.
+
+        return Reservation::latest()->paginate();
     }
 
     public function store(StoreReservationRequest $request)
@@ -26,7 +29,7 @@ class ReservationController extends Controller
         $count = $request->integer('count');
         // This check feels a bit redundant taking validation into account, however it's useful for type-safety reasons
         if (! $startDate || ! $endDate) {
-            throw new Exception('The date range is incomplete'); // TODO: Rewrite to a custom exception
+            throw new InvalidArgumentException('The date range is incomplete');
         }
         // The end date is moved to the end of the previous day, because we don't want to include check out day in the calculations
         $dateRange = CarbonPeriod::create($startDate, $endDate->subDay()->endOfDay());

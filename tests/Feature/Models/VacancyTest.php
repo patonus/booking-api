@@ -17,8 +17,6 @@ class VacancyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // TODO: Rewrite this
-        // Setting up initial data for tests
         Vacancy::create(['date' => Carbon::today(), 'count' => 10]);
         Vacancy::create(['date' => Carbon::tomorrow(), 'count' => 5]);
         Vacancy::create(['date' => Carbon::today()->addDays(2), 'count' => 20]);
@@ -62,7 +60,6 @@ class VacancyTest extends TestCase
     #[Group('isAvailable')]
     public function test_returns_false_when_there_is_missing_vacancy()
     {
-        // Creating a date range that includes a date with no vacancy record
         $dateRange = CarbonPeriod::create(Carbon::today(), Carbon::today()->addDays(3));
 
         $this->assertFalse(Vacancy::isAvailable($dateRange, 1));
